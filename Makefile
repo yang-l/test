@@ -14,3 +14,6 @@ tf_plan:
 
 tf_apply:
 	cd tf && terraform apply
+
+tf_destroy:
+	cd tf && terraform destroy
