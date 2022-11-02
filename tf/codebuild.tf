@@ -41,6 +41,20 @@ resource "aws_iam_role_policy" "codebuild" {
       ]
     },
     {
+      "Effect":"Allow",
+      "Resource": [
+        "${aws_s3_bucket.codepipeline.arn}",
+        "${aws_s3_bucket.codepipeline.arn}/*"
+      ],
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:GetBucketVersioning",
+        "s3:PutObjectAcl",
+        "s3:PutObject"
+      ]
+    },
+    {
       "Effect": "Allow",
       "Resource": [
         "*"
@@ -99,7 +113,7 @@ resource "aws_codebuild_project" "codebuild" {
 
   source {
     type            = "GITHUB"
-    location        = "https://github.com/yang-l/test.git"
+    location        = "https://github.com/${var.gh_owner}/${var.gh_repo}.git"
     git_clone_depth = 1
   }
 }
