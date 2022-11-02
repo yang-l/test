@@ -1,4 +1,4 @@
-FROM 642660919026.dkr.ecr.us-east-1.amazonaws.com/golang:1.19.3 as builder
+FROM 305985460937.dkr.ecr.us-east-1.amazonaws.com/golang:1.19.3 as builder
 
 WORKDIR /app
 

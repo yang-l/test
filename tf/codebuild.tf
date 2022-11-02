@@ -87,13 +87,13 @@ resource "aws_codebuild_project" "codebuild" {
     }
 
     environment_variable {
-      name  = "IMAGE_TAG"
-      value = "latest"
+      name  = "REPO_NAME"
+      value = aws_ecr_repository.main.name
     }
 
     environment_variable {
-      name  = "REPO_NAME"
-      value = aws_ecr_repository.main.name
+      name  = "CONTAINER_NAME"
+      value = "${var.service_name}-web"
     }
   }
 

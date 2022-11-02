@@ -1,5 +1,5 @@
 IMAGE_NAME = server
-S3_BUCKET = thisisatestbucketegzaggny5874
+S3_BUCKET = thisisatestbucketegzaggny5873
 S3_KEY = tf.tfstate
 S3_REGION = us-east-1
 
