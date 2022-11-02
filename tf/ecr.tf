@@ -1,3 +1,3 @@
-resource "aws_ecr_repository" "ecr" {
-  name = "${var.service_name}-ecr"
+resource "aws_ecr_repository" "main" {
+  name = "${var.service_name}-app"
 }
