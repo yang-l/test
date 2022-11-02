@@ -1,9 +1,10 @@
+IMAGE_NAME = server
 S3_BUCKET = thisisatestbucketegzaggny5873
 S3_KEY = tf.tfstate
 S3_REGION = us-east-1
 
 docker_build:
-	docker build -t server .
+	docker build -t $(IMAGE_NAME) .
 
 tf_init:
 	cd tf && terraform init -backend-config="bucket=$(S3_BUCKET)" -backend-config="key=$(S3_KEY)" -backend-config="region=$(S3_REGION)"

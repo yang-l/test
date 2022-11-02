@@ -8,7 +8,7 @@ phases:
   build:
     commands:
       - echo Docker image building
-      - make docker_build
+      - make IMAGE_NAME=$REPO_NAME docker_build
       - docker tag $REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO_NAME:$IMAGE_TAG
   post_build:
     commands:
