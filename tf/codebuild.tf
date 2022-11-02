@@ -93,7 +93,7 @@ resource "aws_codebuild_project" "codebuild" {
 
     environment_variable {
       name  = "REPO_NAME"
-      value = resource.aws_ecr_repository.main.name
+      value = aws_ecr_repository.main.name
     }
   }
 

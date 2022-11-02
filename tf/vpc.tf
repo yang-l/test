@@ -85,8 +85,8 @@ resource "aws_security_group" "alb" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    from_port   = var.port
-    to_port     = var.port
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -114,5 +114,44 @@ resource "aws_security_group" "ecs" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_lb" "ecs_fargate" {
+  name               = "${var.service_name}-ecs-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb.id]
+  subnets            = aws_subnet.pub_sub.*.id
+
+  enable_deletion_protection = false
+}
+
+resource "aws_alb_target_group" "ecs_fargate" {
+  name        = "${var.service_name}-ecs-tg"
+  port        = var.port
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.main.id
+  target_type = "ip"
+
+  health_check {
+   healthy_threshold   = "3"
+   interval            = "30"
+   protocol            = "HTTP"
+   matcher             = "404"
+   timeout             = "3"
+   path                = "/"
+   unhealthy_threshold = "2"
+  }
+}
+
+resource "aws_alb_listener" "ecs_fargate_http" {
+  load_balancer_arn = aws_lb.ecs_fargate.id
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_alb_target_group.ecs_fargate.arn
   }
 }
